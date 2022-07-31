@@ -10,6 +10,7 @@ const { check } = require('express-validator');
 const router = Router();
 const { validarCampos } = require('../middlewares/validar-campos');
 const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
  router.post('/nuevo', [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
@@ -26,6 +27,6 @@ router.post('/',
 ],
  loginUsuario ); 
 
-router.get('/renovar', revalidarToken); 
+router.get('/renovar', validarJWT ,revalidarToken); 
 
 module.exports = router;

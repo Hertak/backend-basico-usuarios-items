@@ -107,12 +107,16 @@ const token = await generarJWT( usuario.id, usuario.name );
     }
 }
 // Revalidar Token
-const revalidarToken =  (req, res = response) => {
+const revalidarToken =  async(req, res = response) => {
 
-    
+    const {uid, name  }= req;
+   
+
+// Generar nuevo token
+const token = await generarJWT( uid, name );
     res.json({
         ok: true,
-        mensaje: 'Renovar'
+        token,
     })
 }
 
