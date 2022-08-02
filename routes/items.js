@@ -9,6 +9,9 @@
    const { Router } = require('express');
    const { validarJWT } = require('../middlewares/validar-jwt');
    const { getItems, crearItem, actualizarItem, borrarItem } = require('../controllers/items');    
+   const { check } = require('express-validator');
+   const { validarCampos } = require('../middlewares/validar-campos');
+   const { isDate } = require('../helpers/isDate');
     
 
    // Llamar al router
@@ -22,7 +25,18 @@
     
    // Crear nuevo item
 
-    router.post('/', crearItem); 
+    router.post('/',
+    
+    [
+      check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+      check('direccion', 'la dirección es obligatorio').not().isEmpty(),
+      check('start', 'la fecha es obligatorio').custom( isDate ),
+      check('end', 'la fecha de finalización es obligatorio').custom( isDate ),
+      validarCampos
+    ],
+    crearItem
+    ); 
+
 
    // Actualizar item
     router.put('/:id', actualizarItem);
