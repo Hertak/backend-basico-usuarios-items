@@ -25,7 +25,14 @@ app.use(express.static('public'));
 app.use( express.json() );
 
 //Rutas 
+
+// Ruta usuarios
+
 app.use('/api/auth', require('./routes/auth'));
+
+// Ruta items
+
+app.use('/api/items', require('./routes/items'));
 
 //escuchar peticiones
 
