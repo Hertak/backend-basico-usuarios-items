@@ -17,7 +17,7 @@
    // Llamar al router
    const router = Router();
    // validación JWT
-   router.use(validarJWT);
+   router.use( validarJWT );
 
    // Obtener todos los items
 
@@ -39,7 +39,15 @@
 
 
    // Actualizar item
-    router.put('/:id', actualizarItem);
+    router.put('/:id',
+    [
+      check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+      check('direccion', 'la dirección es obligatorio').not().isEmpty(),
+      check('start', 'la fecha es obligatorio').custom( isDate ),
+      check('end', 'la fecha de finalización es obligatorio').custom( isDate ),
+      validarCampos
+    ],
+    actualizarItem);
 
    // Borrar item
     router.delete('/:id', borrarItem); 
