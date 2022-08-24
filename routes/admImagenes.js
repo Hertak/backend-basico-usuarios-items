@@ -1,38 +1,20 @@
 const { Router } = require('express');
 const router = Router();
+const { subirImagenes, obtenerImagenes } = require('../controllers/imagenes');
 const Image = require('../models/Imagenes');
-/* const { subirImagenes } = require('../controllers/imagenes'); */
 
 // Obterner listado de imagenes
 
-router.get('/', async (req, res) => {
-  /* const images = await Image.find(); */
-
-  res.render('index');
-});
+router.get('/', obtenerImagenes);
 
 // Ruta para subir imágenes
 
-router.post('/subir', async (req, res) => {
-  const image = new Image();
-  image.titulo = req.body.titulo;
-  image.descripcion = req.body.descripcion;
-  image.archivo = req.file.filename;
-  image.path = '/subidas/' + req.file.filename;
-  image.nombreOriginal = req.file.originalname;
-  image.mimetype = req.file.mimetype;
-  image.tamanio = req.file.size;
-
-  await image.save();
-  res.status(201).json({
-    ok: true,
-    imagen: image.nombreOriginal,
-  });
-});
+router.post('/subir', subirImagenes);
 
 // Obtener una sola imagen
 
 router.get('/imagen/:id', (req, res) => {
+  console.log(req.params.id);
   res.send('Perfil de Imagenes');
 });
 
