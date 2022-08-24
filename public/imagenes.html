@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="favicon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Backend básico</title>
+  </head>
+  <body>
+    <div class="container"><h1>Formulario de imagenes</h1></div>
+
+    <form
+      action="/api/imagenes/subir"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <input type="text" name="titulo" placeholder="Título" />
+      <input type="textarea" name="descripcion" placeholder="Descripción" />
+      <input type="file" name="imagen" />
+      <button type="submit">Enviar</button>
+    </form>
+  </body>
+</html>
