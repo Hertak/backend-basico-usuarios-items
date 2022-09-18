@@ -3,28 +3,28 @@ const { Schema, model } = require('mongoose');
 const ItemSchema = Schema({
   nombre: {
     type: String,
-    required: true,
+    require: true,
   },
   telefono: {
     type: String,
-    required: true,
   },
   direccion: {
     type: String,
-    required: true,
   },
-  start: {
-    type: Date,
-    required: false,
+
+  slug: {
+    type: String,
   },
-  end: {
-    type: Date,
-    required: false,
+  deturno: {
+    type: Array,
   },
+  op_imagen: {
+    type: String,
+  },
+
   usuario: {
     type: Schema.Types.ObjectId,
     ref: 'Usuario',
-    required: true,
   },
 });
 

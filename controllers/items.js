@@ -5,7 +5,30 @@ const Item = require('../models/items');
 
 const getItems = async (req, res = response) => {
   // Metodo Find para listar y metodo populate para llenar la referencia
-  const items = await Item.find().populate('usuario', 'name');
+  const items = await Item.aggregate([{ $sample: { size: 30 } }]);
+
+  res.json({
+    ok: true,
+    items,
+  });
+};
+const getRandomItems = async (req, res = response) => {
+  // Metodo Find para listar Items
+  const items = await Item.aggregate([{ $sample: { size: 4 } }]);
+
+  res.json({
+    ok: true,
+    items,
+  });
+};
+// Obtener turnos
+const getItemsTurnos = async (req, res = response) => {
+  const url = req.params.deturno;
+
+  const items = await Item.aggregate([
+    { $match: { deturno: url } },
+    { $sample: { size: 10 } },
+  ]);
 
   res.json({
     ok: true,
@@ -28,6 +51,28 @@ const crearItem = async (req, res = response) => {
     res.status(500).json({
       ok: false,
       mensaje: 'Hable con el administrador',
+    });
+  }
+};
+
+// Buscar por slug item
+const itemPorSlug = async (req, res = response) => {
+  const url = req.params.slug;
+
+  /* const slug = req.body.slug;
+  const item = await Item.findById(slug); */
+
+  const itemslug = await Item.findOne({ slug: url });
+
+  if (itemslug !== undefined && itemslug !== null) {
+    res.json({
+      ok: true,
+      item: itemslug,
+    });
+  } else {
+    return res.status(404).json({
+      ok: false,
+      mensaje: 'El Item no existe por ese slug',
     });
   }
 };
@@ -118,4 +163,7 @@ module.exports = {
   crearItem,
   actualizarItem,
   borrarItem,
+  itemPorSlug,
+  getRandomItems,
+  getItemsTurnos,
 };
